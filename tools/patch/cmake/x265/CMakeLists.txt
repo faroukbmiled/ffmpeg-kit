@@ -7,17 +7,17 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 message(STATUS "cmake version ${CMAKE_VERSION}")
 if(POLICY CMP0025)
-    cmake_policy(SET CMP0025 OLD) # report Apple's Clang as just Clang
+    cmake_policy(SET CMP0025 NEW) # report Apple's Clang as AppleClang
 endif()
 if(POLICY CMP0042)
     cmake_policy(SET CMP0042 NEW) # MACOSX_RPATH
 endif()
 if(POLICY CMP0054)
-    cmake_policy(SET CMP0054 OLD) # Only interpret if() arguments as variables or keywords when unquoted
+    cmake_policy(SET CMP0054 NEW) # Only interpret if() arguments as variables or keywords when unquoted
 endif()
 
+cmake_minimum_required (VERSION 3.5) # OBJECT libraries require 2.8.8
 project (x265)
-cmake_minimum_required (VERSION 2.8.8) # OBJECT libraries require 2.8.8
 include(CheckIncludeFiles)
 include(CheckFunctionExists)
 include(CheckSymbolExists)
@@ -40,7 +40,7 @@ SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" "${CMAKE_MODULE_PATH}")
 # System architecture detection
 string(TOLOWER "${CMAKE_SYSTEM_PROCESSOR}" SYSPROC)
 set(X86_ALIASES x86 i386 i686 x86_64 amd64)
-set(ARM_ALIASES armv6l armv7 armv7s aarch64)
+set(ARM_ALIASES armv6l armv7 armv7s aarch64 arm64)
 list(FIND X86_ALIASES "${SYSPROC}" X86MATCH)
 list(FIND ARM_ALIASES "${SYSPROC}" ARMMATCH)
 set(POWER_ALIASES ppc64 ppc64le)
@@ -138,7 +138,7 @@ if(APPLE)
   add_definitions(-DMACOS=1)
 endif()
 
-if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "AppleClang")
     set(CLANG 1)
 endif()
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Intel")
