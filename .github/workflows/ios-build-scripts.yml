@@ -1,6 +1,7 @@
 name: ios build scripts
 
 on:
+  workflow_call:
   workflow_dispatch:
   push:
     branches:
@@ -47,7 +48,21 @@ jobs:
       - name: set up xcode
         run: echo "export DEVELOPER_DIR=/Applications/Xcode_${{ matrix.config.xcode }}.app/Contents/Developer" > ~/.xcode.for.ffmpeg.kit.sh
       - name: run the build script
-        run: ./ios.sh --xcframework --enable-ios-audiotoolbox --enable-ios-avfoundation --enable-ios-bzip2 --enable-ios-libiconv --enable-ios-videotoolbox --enable-ios-zlib
+        run: |
+          ./ios.sh --xcframework \
+            --enable-ios-audiotoolbox --enable-ios-avfoundation --enable-ios-bzip2 \
+            --enable-ios-libiconv --enable-ios-videotoolbox --enable-ios-zlib \
+            --enable-gpl \
+            --enable-x264 --enable-x265 --enable-xvidcore --enable-vid.stab \
+            --enable-libvpx --enable-fdk-aac --enable-openh264 \
+            --enable-dav1d --enable-libaom --enable-kvazaar \
+            --enable-libilbc --enable-libtheora --enable-libvorbis \
+            --enable-libwebp --enable-lame --enable-opus --enable-shine \
+            --enable-soxr --enable-speex --enable-twolame --enable-snappy \
+            --enable-srt --enable-gnutls --enable-gmp --enable-chromaprint \
+            --enable-fontconfig --enable-freetype --enable-fribidi \
+            --enable-libass --enable-libxml2 --enable-zimg --enable-rubberband \
+            --enable-tesseract --enable-opencore-amr
       - name: print build logs
         if: ${{ always() }}
         run: cat build.log
