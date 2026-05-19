@@ -53,8 +53,8 @@ jobs:
             --enable-ios-audiotoolbox --enable-ios-avfoundation --enable-ios-bzip2 \
             --enable-ios-libiconv --enable-ios-videotoolbox --enable-ios-zlib \
             --enable-gpl \
-            --enable-x264 --enable-x265 --enable-xvidcore --enable-vid.stab \
-            --enable-libvpx --enable-fdk-aac --enable-openh264 \
+            --enable-x264 --enable-x265 --enable-xvidcore --enable-libvidstab \
+            --enable-libvpx --enable-openh264 \
             --enable-dav1d --enable-libaom --enable-kvazaar \
             --enable-libilbc --enable-libtheora --enable-libvorbis \
             --enable-libwebp --enable-lame --enable-opus --enable-shine \
