@@ -51,6 +51,7 @@ jobs:
         run: |
           export PATH="$(brew --prefix bison)/bin:$PATH"
           export XML_CATALOG_FILES="$(brew --prefix)/etc/xml/catalog"
+          export CMAKE_POLICY_VERSION_MINIMUM=3.5
           ./ios.sh --xcframework \
             --enable-ios-audiotoolbox --enable-ios-avfoundation --enable-ios-bzip2 \
             --enable-ios-libiconv --enable-ios-videotoolbox --enable-ios-zlib \
