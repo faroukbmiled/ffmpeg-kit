@@ -28,12 +28,15 @@ on:
       - 'ios.sh'
 
 jobs:
-  build-main-on-macos-sonoma:
-    name: ios main on sonoma
-    runs-on: macos-14
+  build-main:
+    name: ios main ${{ matrix.config.runner }} xcode ${{ matrix.config.xcode }}
+    runs-on: ${{ matrix.config.runner }}
     strategy:
+      fail-fast: false
       matrix:
-        xcode: [ '15.4', '16.0' ]
+        config:
+          - { runner: macos-14, xcode: '15.4' }
+          - { runner: macos-15, xcode: '16.2' }
     defaults:
       run:
         shell: bash
@@ -42,7 +45,7 @@ jobs:
       - name: prerequisites
         run: brew install autoconf automake libtool pkg-config curl git cmake nasm
       - name: set up xcode
-        run: echo "export DEVELOPER_DIR=/Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer" > ~/.xcode.for.ffmpeg.kit.sh
+        run: echo "export DEVELOPER_DIR=/Applications/Xcode_${{ matrix.config.xcode }}.app/Contents/Developer" > ~/.xcode.for.ffmpeg.kit.sh
       - name: run the build script
         run: ./ios.sh --xcframework --enable-ios-audiotoolbox --enable-ios-avfoundation --enable-ios-bzip2 --enable-ios-libiconv --enable-ios-videotoolbox --enable-ios-zlib
       - name: print build logs
@@ -51,49 +54,19 @@ jobs:
       - name: print ffbuild logs
         if: ${{ failure() }}
         run: '[[ -f ./src/ffmpeg/ffbuild/config.log ]] && tail -50 ./src/ffmpeg/ffbuild/config.log'
-  build-main-on-macos-ventura:
-    name: ios main on ventura
-    runs-on: macos-13
-    strategy:
-      matrix:
-        xcode: [ '14.3.1', '15.2' ]
-    defaults:
-      run:
-        shell: bash
-    steps:
-      - uses: actions/checkout@v4
-      - name: prerequisites
-        run: brew install autoconf automake libtool pkg-config curl git cmake nasm
-      - name: set up xcode
-        run: echo "export DEVELOPER_DIR=/Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer" > ~/.xcode.for.ffmpeg.kit.sh
-      - name: run the build script
-        run: ./ios.sh --xcframework --enable-ios-audiotoolbox --enable-ios-avfoundation --enable-ios-bzip2 --enable-ios-libiconv --enable-ios-videotoolbox --enable-ios-zlib
-      - name: print build logs
-        if: ${{ always() }}
-        run: cat build.log
-      - name: print ffbuild logs
+      - name: upload xcframework artifact
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ffmpeg-kit-ios-xcframework-xcode-${{ matrix.config.xcode }}
+          path: prebuilt/bundle-apple-xcframework-ios/
+          if-no-files-found: error
+          retention-days: 30
+      - name: upload build log on failure
         if: ${{ failure() }}
-        run: '[[ -f ./src/ffmpeg/ffbuild/config.log ]] && tail -50 ./src/ffmpeg/ffbuild/config.log'
-  build-lts-on-macos-monterey:
-    name: ios lts on monterey
-    runs-on: macos-12
-    strategy:
-      matrix:
-        xcode: [ '13.4.1', '14.2' ]
-    defaults:
-      run:
-        shell: bash
-    steps:
-      - uses: actions/checkout@v4
-      - name: prerequisites
-        run: brew install autoconf automake libtool pkg-config curl git cmake nasm
-      - name: set up xcode
-        run: echo "export DEVELOPER_DIR=/Applications/Xcode_${{ matrix.xcode }}.app/Contents/Developer" > ~/.xcode.for.ffmpeg.kit.sh
-      - name: run the build script
-        run: ./ios.sh --lts --enable-ios-audiotoolbox --enable-ios-bzip2 --enable-ios-libiconv --enable-ios-zlib
-      - name: print build logs
-        if: ${{ always() }}
-        run: cat build.log
-      - name: print ffbuild logs
-        if: ${{ failure() }}
-        run: '[[ -f ./src/ffmpeg/ffbuild/config.log ]] && tail -50 ./src/ffmpeg/ffbuild/config.log'
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log-xcode-${{ matrix.config.xcode }}
+          path: build.log
+          if-no-files-found: ignore
+          retention-days: 14
