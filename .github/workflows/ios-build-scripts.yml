@@ -62,7 +62,7 @@ jobs:
             --enable-libilbc --enable-libtheora --enable-libvorbis \
             --enable-libwebp --enable-lame --enable-opus --enable-shine \
             --enable-soxr --enable-speex --enable-twolame --enable-snappy \
-            --enable-srt --enable-gnutls --enable-gmp --enable-chromaprint \
+            --enable-srt --enable-openssl --enable-chromaprint \
             --enable-fontconfig --enable-freetype --enable-fribidi \
             --enable-libass --enable-libxml2 --enable-zimg --enable-rubberband \
             --enable-tesseract --enable-opencore-amr
