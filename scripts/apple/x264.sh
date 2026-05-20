@@ -40,6 +40,8 @@ ${SED_INLINE} 's/\-arch arm64//g' "${BASEDIR}"/src/"${LIB_NAME}"/configure 1>>"$
   --sysroot=${SDK_PATH} \
   --enable-static \
   --disable-cli \
+  --bit-depth=all \
+  --chroma-format=all \
   ${ASM_OPTIONS} \
   ${DEBUG_OPTIONS} \
   --host="${HOST}" || return 1
