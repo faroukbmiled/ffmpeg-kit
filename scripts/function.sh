@@ -210,6 +210,7 @@ get_library_name() {
   89) echo "linux-tesseract" ;;
   90) echo "linux-vaapi" ;;
   91) echo "linux-vo-amrwbenc" ;;
+  92) echo "fdk-aac" ;;
   esac
 }
 
@@ -307,6 +308,7 @@ from_library_name() {
   linux-tesseract) echo 89 ;;
   linux-vaapi) echo 90 ;;
   linux-vo-amrwbenc) echo 91 ;;
+  fdk-aac) echo 92 ;;
   esac
 }
 
@@ -378,11 +380,20 @@ is_library_supported_on_platform() {
     ;;
 
   # ONLY LINUX
-  62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 | 81 | 82 | 83 | 84 | 85 | 86 | 87 | 88 | 89 | 90 | 91 | 92)
+  62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 | 71 | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 | 81 | 82 | 83 | 84 | 85 | 86 | 87 | 88 | 89 | 90 | 91)
     if [[ ${FFMPEG_KIT_BUILD_TYPE} == "linux" ]]; then
       echo "0"
     else
       echo "1"
+    fi
+    ;;
+
+  # ALL EXCEPT LINUX (NONFREE)
+  92)
+    if [[ ${FFMPEG_KIT_BUILD_TYPE} == "linux" ]]; then
+      echo "1"
+    else
+      echo "0"
     fi
     ;;
   *)
@@ -879,6 +890,7 @@ display_help_common_libraries() {
   echo -e "  --enable-libwebp\t\tbuild with libwebp [no]"
   echo -e "  --enable-libxml2\t\tbuild with libxml2 [no]"
   echo -e "  --enable-opencore-amr\t\tbuild with opencore-amr [no]"
+  echo -e "  --enable-fdk-aac\t\tbuild with fdk-aac (nonfree) [no]"
   echo -e "  --enable-openh264\t\tbuild with openh264 [no]"
   echo -e "  --enable-openssl\t\tbuild with openssl [no]"
   echo -e "  --enable-opus\t\t\tbuild with opus [no]"
@@ -1182,6 +1194,9 @@ set_library() {
     ;;
   opencore-amr)
     ENABLED_LIBRARIES[LIBRARY_OPENCOREAMR]=$2
+    ;;
+  fdk-aac)
+    ENABLED_LIBRARIES[LIBRARY_FDK_AAC]=$2
     ;;
   openh264)
     ENABLED_LIBRARIES[LIBRARY_OPENH264]=$2

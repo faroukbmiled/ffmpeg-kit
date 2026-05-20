@@ -36,7 +36,6 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { runner: macos-14, xcode: '15.4' }
           - { runner: macos-15, xcode: '16.2' }
     defaults:
       run:
@@ -57,7 +56,7 @@ jobs:
             --enable-ios-libiconv --enable-ios-videotoolbox --enable-ios-zlib \
             --enable-gpl \
             --enable-x264 --enable-x265 --enable-xvidcore --enable-libvidstab \
-            --enable-libvpx --enable-openh264 \
+            --enable-libvpx --enable-openh264 --enable-fdk-aac \
             --enable-dav1d --enable-libaom --enable-kvazaar \
             --enable-libilbc --enable-libtheora --enable-libvorbis \
             --enable-libwebp --enable-lame --enable-opus --enable-shine \

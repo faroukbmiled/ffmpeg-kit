@@ -176,6 +176,11 @@ get_library_source() {
     SOURCE_ID="v0.1.6"
     SOURCE_TYPE="TAG"
     ;;
+  fdk-aac)
+    SOURCE_REPO_URL="https://github.com/mstorsjo/fdk-aac"
+    SOURCE_ID="v2.0.3"
+    SOURCE_TYPE="TAG"
+    ;;
   openh264)
     SOURCE_REPO_URL="https://github.com/arthenica/openh264"
     SOURCE_ID="v2.3.1"

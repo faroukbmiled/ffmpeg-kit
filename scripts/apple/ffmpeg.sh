@@ -106,7 +106,7 @@ CONFIGURE_POSTFIX=""
 HIGH_PRIORITY_LDFLAGS=""
 
 # SET CONFIGURE OPTIONS
-for library in {0..61}; do
+for library in {0..61} 92; do
   if [[ ${ENABLED_LIBRARIES[$library]} -eq 1 ]]; then
     ENABLED_LIBRARY=$(get_library_name ${library})
 
@@ -122,6 +122,11 @@ for library in {0..61}; do
       FFMPEG_CFLAGS+=" $(pkg-config --cflags dav1d 2>>"${BASEDIR}"/build.log)"
       FFMPEG_LDFLAGS+=" $(pkg-config --libs --static dav1d 2>>"${BASEDIR}"/build.log)"
       CONFIGURE_POSTFIX+=" --enable-libdav1d"
+      ;;
+    fdk-aac)
+      FFMPEG_CFLAGS+=" $(pkg-config --cflags fdk-aac 2>>"${BASEDIR}"/build.log)"
+      FFMPEG_LDFLAGS+=" $(pkg-config --libs --static fdk-aac 2>>"${BASEDIR}"/build.log)"
+      CONFIGURE_POSTFIX+=" --enable-libfdk-aac --enable-nonfree"
       ;;
     fontconfig)
       FFMPEG_CFLAGS+=" $(pkg-config --cflags fontconfig 2>>"${BASEDIR}"/build.log)"
