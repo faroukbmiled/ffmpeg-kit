@@ -52,6 +52,8 @@ jobs:
           export XML_CATALOG_FILES="$(brew --prefix)/etc/xml/catalog"
           export CMAKE_POLICY_VERSION_MINIMUM=3.5
           ./ios.sh --xcframework \
+            --disable-arm64e --disable-x86-64 \
+            --disable-x86-64-mac-catalyst --disable-arm64-mac-catalyst \
             --enable-ios-audiotoolbox --enable-ios-avfoundation --enable-ios-bzip2 \
             --enable-ios-libiconv --enable-ios-videotoolbox --enable-ios-zlib \
             --enable-gpl \
