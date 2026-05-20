@@ -419,7 +419,7 @@ if [ "$GPL_ENABLED" == "yes" ]; then
 fi
 
 # ALWAYS BUILD SHARED LIBRARIES
-BUILD_LIBRARY_OPTIONS="--enable-shared --disable-static --install-name-dir=@rpath"
+BUILD_LIBRARY_OPTIONS="--enable-shared --disable-static --install-name-dir=@loader_path/.."
 
 # OPTIMIZE FOR SPEED INSTEAD OF SIZE
 if [[ -z ${FFMPEG_KIT_OPTIMIZED_FOR_SPEED} ]]; then
