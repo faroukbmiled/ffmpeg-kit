@@ -952,7 +952,7 @@ reconf_library() {
   local RECONF_VARIABLE=$(echo "RECONF_$1" | sed "s/\-/\_/g")
   local library_supported=0
 
-  for library in {0..49}; do
+  for library in {0..49} 92; do
     library_name=$(get_library_name ${library})
     local library_supported_on_platform=$(is_library_supported_on_platform "${library_name}")
 
@@ -979,7 +979,7 @@ rebuild_library() {
   local REBUILD_VARIABLE=$(echo "REBUILD_$1" | sed "s/\-/\_/g")
   local library_supported=0
 
-  for library in {0..49}; do
+  for library in {0..49} 92; do
     library_name=$(get_library_name ${library})
     local library_supported_on_platform=$(is_library_supported_on_platform "${library_name}")
 
@@ -1006,7 +1006,7 @@ redownload_library() {
   local REDOWNLOAD_VARIABLE=$(echo "REDOWNLOAD_$1" | sed "s/\-/\_/g")
   local library_supported=0
 
-  for library in {0..49}; do
+  for library in {0..49} 92; do
     library_name=$(get_library_name ${library})
     local library_supported_on_platform=$(is_library_supported_on_platform "${library_name}")
 
@@ -1640,7 +1640,7 @@ print_enabled_xcframeworks() {
   let enabled=0
 
   # SUPPLEMENTARY LIBRARIES NOT PRINTED
-  for library in {0..49}; do
+  for library in {0..49} 92; do
     if [[ ${ENABLED_LIBRARIES[$library]} -eq 1 ]]; then
       if [[ ${enabled} -ge 1 ]]; then
         echo -n ", "
@@ -2056,7 +2056,7 @@ downloaded_library_sources() {
     exit 1
   fi
 
-  for library in {1..50}; do
+  for library in {1..50} 93; do
     if [[ ${!library} -eq 1 ]]; then
       library_name=$(get_library_name $((library - 1)))
 
